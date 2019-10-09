@@ -1,16 +1,9 @@
 from package.module import Symbol, Parser, Command, generate_binary_code
-
-# path = '../projects/06/add/Add.asm'
-# path = '../projects/06/max/Max.asm'
-# path = '../projects/06/max/MaxL.asm'
-# path = '../projects/06/pong/PongL.asm'
-# path = '../projects/06/pong/Pong.asm'
-# path = '../projects/06/rect/Rect.asm'
-# path = '../projects/06/rect/RectL.asm'
+import sys
 
 
 def main():
-    fname = 'pong'
+    fname = sys.argv[1]
     symbol = Symbol()
     asm = Parser(fname)
 
@@ -45,7 +38,6 @@ def main():
                 file.write(code + '\n')
             # @var in symbol
             elif not command.symbol == '' and symbol.contains(command.symbol):
-                print(command.symbol)
                 value = symbol.getAddress(command.symbol)
                 command = Command('@'+str(value))
 
@@ -60,6 +52,7 @@ def main():
                 symbol.incre_current_addr()
 
     file.close()
+    print("Done! New file is {}".format(asm.hack_path))
 
 
 if __name__ == "__main__":
